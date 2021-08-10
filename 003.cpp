@@ -29,15 +29,15 @@
 #define SUM(v, type) accumulate((v).begin(), (v).end(), (type) 0)
 #define MIN(v) (*min_element((v).begin(), (v).end()))
 #define MAX(v) (*max_element((v).begin(), (v).end()))
-#define ARGMIN(v) distance((v).begin(), min_element((v).begin(), (v).end()))
-#define ARGMAX(v) distance((v).begin(), max_element((v).begin(), (v).end()))
+#define ARGMIN(v) (min_element((v).begin(), (v).end()) - (v).begin())
+#define ARGMAX(v) (max_element((v).begin(), (v).end()) - (v).begin())
 #define REVERSE(v) reverse((v).begin(), (v).end())
 #define ARANGE(v) iota((v).begin(), (v).end(), 0)
 #define FILTER(src, tgt, func) copy_if(begin(src), end(src), back_inserter(tgt), func); // func = [](type x){return 条件;}
 #define CTOI(c) (c - '0')
 #define HEADSTR(str, n) str.substr(0, (n))
 #define TAILSTR(str, n) str.substr((str).length() - (n))
-#define INSPOS(v, a) (lower_bound((vec).begin(), (vec).end(), a) - (vec).begin())
+#define INSPOS(v, a) (lower_bound((v).begin(), (v).end(), a) - (v).begin())
 // io系
 #define OUT(x) cout << (x) << endl;
 #define IN(x) cin >> x;
