@@ -16,7 +16,7 @@ run:$(TARGETS) $(OBJECTS)
 
 %.exe: $(OBJDIR)/%.o
 	$(CXX) -o $@ $< $(LDFLAGS)
-	./$@
+	# ./$@
 
 $(OBJDIR)/%.o: %.cpp
 	@if [ ! -d $(OBJDIR) ];\
