@@ -202,3 +202,6 @@ DPでS円になるか判定し, DPテーブルを逆順にたどって解を求�
 - 連結判定はUnionFindかsetのlower_boundを使うと可能
     - s.lower_bound(x)を使わず, lower_bound(s.begin(), s.end(), x)にするとTLEになるため注意
 
+### 069: 2つ隣まで異なる色で塗り分けるときの場合の数
+高速べき乗法を使う
+
