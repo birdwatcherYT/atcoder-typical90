@@ -1,5 +1,6 @@
-#pragma GCC optimize("O3")
+// #pragma GCC optimize("O3")
 // #include <atcoder/all>
+// #include <bits/stdc++.h>
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -15,13 +16,10 @@
 #include <numeric>
 #include <cassert> // assert();
 #include <iomanip> // cout << setprecision(15);
-// #include <bits/stdc++.h>
-#ifndef M_PI
-	#define M_PI		3.14159265358979323846
-#endif
-#ifndef M_E
-	#define M_E		2.7182818284590452354
-#endif
+#define _PI     3.14159265358979323846
+#define _E      2.7182818284590452354
+#define INF     (INT_MAX / 2)
+#define LINF    (LLONG_MAX / 2)
 #define FOR(i, a, b) for(int i = (a); i < (b); ++i)
 #define REP(i, n)  FOR(i, 0, n)
 #define RREP(i, n)  for(int i = (n) - 1; i >= 0; --i)
@@ -60,11 +58,13 @@ template<class T> vector<size_t> argsort(const vector<T> &vec, bool asc=true){
 	return index;
 }
 // 表示系
-template <class Head> void OUT(Head&& head) {cout << head << endl;}
-template <class Head, class... Tail> void OUT(Head&& head, Tail&&... tail) {cout << head << " ";OUT(forward<Tail>(tail)...);}
 template<class T1, class T2> ostream& operator<<(ostream& os, const pair<T1, T2>& p) {
 	os << "(" << p.first << ", " << p.second << ")";
 	return os;
+}
+template<class... T> ostream& operator<<(ostream& os, const tuple<T...>& t) {
+	os << "("; apply([&os](auto&&... args) {((os << args << ", "), ...);}, t);
+	os << ")"; return os;
 }
 template<class T> ostream& operator<<(ostream& os, const vector<T>& vec) {
 	os << "[ "; for ( const T& item : vec ) os << item << ", ";
@@ -78,21 +78,19 @@ template<class T1, class T2> ostream& operator<<(ostream& os, const map<T1, T2>&
 	os << "{ "; for ( const auto &[key, value] : m ) os << key << ":"<< value << ", ";
 	os << "}"; return os;
 }
-template<class... T> ostream& operator<<(ostream& os, const tuple<T...>& t) {
-	os << "("; apply([&os](auto&&... args) {((os << args << ", "), ...);}, t);
-	os << ")"; return os;
-}
+template <class Head> void OUT(Head&& head) {cout << head << endl;}
+template <class Head, class... Tail> void OUT(Head&& head, Tail&&... tail) {cout << head << " ";OUT(forward<Tail>(tail)...);}
 // 入力系
 template<class T1, class T2> istream& operator>>(istream& is, pair<T1, T2>& p) {
 	is >> p.first >> p.second;
 	return is;
 }
-template<class T> istream& operator>>(istream& is, vector<T>& vec) {
-	for ( T& item : vec ) is >> item;
-	return is;
-}
 template<class... T> istream& operator>>(istream& is, tuple<T...>& t) {
 	apply([&is](auto&&... args) {((is >> args), ...);}, t);
+	return is;
+}
+template<class T> istream& operator>>(istream& is, vector<T>& vec) {
+	for ( T& item : vec ) is >> item;
 	return is;
 }
 // 集合演算
@@ -109,7 +107,7 @@ template<class T> set<T> operator-(const set<T>& a, const set<T>& b) {// 差集�
 	return ans;
 }
 
-typedef long long LL;
+typedef long long LL; typedef unsigned long long ULL;
 typedef vector<int> VI; typedef vector<VI> VVI;
 typedef vector<LL> VL; typedef vector<VL> VVL;
 typedef vector<bool> VB; typedef vector<VB> VVB;

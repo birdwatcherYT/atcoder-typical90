@@ -1,5 +1,6 @@
-#pragma GCC optimize("O3")
+// #pragma GCC optimize("O3")
 // #include <atcoder/all>
+// #include <bits/stdc++.h>
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -15,13 +16,10 @@
 #include <numeric>
 #include <cassert> // assert();
 #include <iomanip> // cout << setprecision(15);
-// #include <bits/stdc++.h>
-#ifndef M_PI
-	#define M_PI		3.14159265358979323846
-#endif
-#ifndef M_E
-	#define M_E		2.7182818284590452354
-#endif
+#define _PI     3.14159265358979323846
+#define _E      2.7182818284590452354
+#define INF     (INT_MAX / 2)
+#define LINF    (LLONG_MAX / 2)
 #define FOR(i, a, b) for(int i = (a); i < (b); ++i)
 #define REP(i, n)  FOR(i, 0, n)
 #define RREP(i, n)  for(int i = (n) - 1; i >= 0; --i)
@@ -48,53 +46,47 @@
 #define TAILSTR(str, n) str.substr((str).length() - (n))
 #define CONTAINS(str, c) ((str).find(c) != string::npos)
 #define INSPOS(v, a) (lower_bound((v).begin(), (v).end(), a) - (v).begin())
-// io系
-#define OUT(x) cout << (x) << endl;
-#define IN(x) cin >> x;
+// デバッグ用
 #define dump(x)  cerr << #x << " = " << (x) << endl;
 #define debug(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << " " << __FILE__ << endl;
 
 using namespace std;
 
 template<class T> vector<size_t> argsort(const vector<T> &vec, bool asc=true){
-	vector<size_t> index(vec.size());
-	iota(index.begin(), index.end(), 0);
+	vector<size_t> index(vec.size()); iota(index.begin(), index.end(), 0);
 	sort(index.begin(), index.end(), [&vec, &asc](size_t i, size_t j){return asc ? (vec[i] < vec[j]):(vec[i] > vec[j]);});
 	return index;
 }
 // 表示系
-template <class Head> void print(Head&& head) {
-	cout << head << endl;
-}
-template <class Head, class... Tail> void print(Head&& head, Tail&&... tail) {
-	cout << head << " ";
-	print(forward<Tail>(tail)...);
-}
 template<class T1, class T2> ostream& operator<<(ostream& os, const pair<T1, T2>& p) {
 	os << "(" << p.first << ", " << p.second << ")";
 	return os;
 }
+template<class... T> ostream& operator<<(ostream& os, const tuple<T...>& t) {
+	os << "("; apply([&os](auto&&... args) {((os << args << ", "), ...);}, t);
+	os << ")"; return os;
+}
 template<class T> ostream& operator<<(ostream& os, const vector<T>& vec) {
-	os << "[ ";
-	for ( const T& item : vec ) os << item << ", ";
-	os << "]";
-	return os;
+	os << "[ "; for ( const T& item : vec ) os << item << ", ";
+	os << "]"; return os;
 }
 template<class T> ostream& operator<<(ostream& os, const set<T>& s) {
-	os << "{ ";
-	for ( const T& item : s ) os << item << ", ";
-	os << "}";
-	return os;
+	os << "{ "; for ( const T& item : s ) os << item << ", ";
+	os << "}"; return os;
 }
 template<class T1, class T2> ostream& operator<<(ostream& os, const map<T1, T2>& m) {
-	os << "{ ";
-	for ( const auto &[key, value] : m ) os << key << ":"<< value << ", ";
-	os << "}";
-	return os;
+	os << "{ "; for ( const auto &[key, value] : m ) os << key << ":"<< value << ", ";
+	os << "}"; return os;
 }
+template <class Head> void OUT(Head&& head) {cout << head << endl;}
+template <class Head, class... Tail> void OUT(Head&& head, Tail&&... tail) {cout << head << " ";OUT(forward<Tail>(tail)...);}
 // 入力系
 template<class T1, class T2> istream& operator>>(istream& is, pair<T1, T2>& p) {
 	is >> p.first >> p.second;
+	return is;
+}
+template<class... T> istream& operator>>(istream& is, tuple<T...>& t) {
+	apply([&is](auto&&... args) {((is >> args), ...);}, t);
 	return is;
 }
 template<class T> istream& operator>>(istream& is, vector<T>& vec) {
@@ -103,27 +95,54 @@ template<class T> istream& operator>>(istream& is, vector<T>& vec) {
 }
 // 集合演算
 template<class T> set<T> operator&(const set<T>& a, const set<T>& b) {// 共通集合
-	set<T> ans;
-	set_intersection(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ans, ans.end()));
+	set<T> ans; set_intersection(a.begin(), a.end(), b.begin(), b.end(), inserter(ans, ans.end()));
 	return ans;
 }
 template<class T> set<T> operator|(const set<T>& a, const set<T>& b) {// 和集合
-	set<T> ans;
-	std::set_union(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ans, ans.end()));
+	set<T> ans; set_union(a.begin(), a.end(), b.begin(), b.end(), inserter(ans, ans.end()));
 	return ans;
 }
 template<class T> set<T> operator-(const set<T>& a, const set<T>& b) {// 差集合
-	set<T> ans;
-	std::set_difference(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ans, ans.end()));
+	set<T> ans; set_difference(a.begin(), a.end(), b.begin(), b.end(), inserter(ans, ans.end()));
 	return ans;
 }
 
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-typedef vector<string> VS;
-typedef pair<int, int> PII;
-typedef set<int> SI;
-typedef long long LL;
+typedef long long LL; typedef unsigned long long ULL;
+typedef vector<int> VI; typedef vector<VI> VVI;
+typedef vector<LL> VL; typedef vector<VL> VVL;
+typedef vector<bool> VB; typedef vector<VB> VVB;
+typedef vector<char> VC; typedef vector<string> VS;
+typedef pair<int, int> PII; typedef pair<LL, LL> PLL;
+typedef map<int, int> MII; typedef map<LL, LL> MLL;
+typedef set<int> SI; typedef set<LL> SL;
+
+istringstream debug_iss(R"(
+10000 20
+4539 6002 485976
+1819 5162 457795
+1854 2246 487643
+1023 4733 393530
+1052 6274 289577
+1874 2436 167747
+1457 4248 452660
+2103 4189 174955
+3057 5061 319316
+4898 4953 394627
+1313 2880 154687
+1274 1364 259598
+3866 5844 233027
+1163 5036 386223
+1234 4630 155972
+2845 4978 442858
+3168 5368 171601
+3708 4407 394899
+3924 4122 428313
+2112 4169 441976
+)");
+// #define cin debug_iss
+
+template <class Head> void IN(Head&& head) {cin >> head;}
+template <class Head, class... Tail> void IN(Head&& head, Tail&&... tail) {cin >> head;IN(forward<Tail>(tail)...);}
 
 
 // 最大値に関するセグメント木
@@ -133,10 +152,10 @@ private:
 	T init_val; // 初期値
 	int num_leaves; // 2のべき
 	vector<T> data, lazy;
-	vector<bool> upd;
+	VB upd;
 
 	T op(T a, T b){
-		return max(a,b); // ここを書き換えれば最小値, 合計値に対する木も作れる
+		return max(a, b); // ここを書き換えれば最小値, 合計値に対する木も作れる
 	}
 	void __update(int a, int b, T val, int i, int l, int r) {
 		eval(i);
@@ -198,7 +217,7 @@ public:
 	}
 	// 表示用
 	friend ostream& operator<<(ostream& os, SegmentTree& st){
-		st.query(0,st.num_leaves);
+		st.query(0, st.num_leaves);
 		int br=1;
 		for (int i = 0; i < 2*st.num_leaves-1; ++i) {
 			os << st.data[i] << ", ";
@@ -211,31 +230,6 @@ public:
 	}
 };
 
-istringstream debug_iss(R"(
-10000 20
-4539 6002 485976
-1819 5162 457795
-1854 2246 487643
-1023 4733 393530
-1052 6274 289577
-1874 2436 167747
-1457 4248 452660
-2103 4189 174955
-3057 5061 319316
-4898 4953 394627
-1313 2880 154687
-1274 1364 259598
-3866 5844 233027
-1163 5036 386223
-1234 4630 155972
-2845 4978 442858
-3168 5368 171601
-3708 4407 394899
-3924 4122 428313
-2112 4169 441976
-)");
-// #define cin debug_iss
-
 
 // int -> str: to_string(i)
 // str -> int: stoi(s)
@@ -243,11 +237,11 @@ istringstream debug_iss(R"(
 int main() {
 	// in
 	int w,n;
-	IN(w)IN(n)
+	IN(w,n);
 	VVI lrv(n, VI(3));
-	IN(lrv)
+	IN(lrv);
 
-	vector< vector<LL> > dp(n, vector<LL>(w+1, -1));
+	VVL dp(n, VL(w+1, -1));
 	SegmentTree<LL> st(w+1, -1);
 
 	dp[0][0]=0;
@@ -264,6 +258,6 @@ int main() {
 			dp[i][vol]=max(dp[i][vol], value+lrv[i][2]);
 		}
 	}
-	OUT(dp[n-1][w])
+	OUT(dp[n-1][w]);
 	return 0;
 }
