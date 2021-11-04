@@ -26,7 +26,7 @@
 #define EACH(e, v) for(auto &e : v)
 #define ITR(it, v) for(auto it = (v).begin(); it != (v).end(); ++it)
 #define RITR(it, v) for(auto it = (v).rbegin(); it != (v).rend(); ++it)
-#define CASE(x) break; case x:
+#define CASE break; case
 #define ALL(v)  (v).begin(), (v).end()
 #define RALL(v) (v).rbegin(), (v).rend()
 #define SZ(v) int((v).size())

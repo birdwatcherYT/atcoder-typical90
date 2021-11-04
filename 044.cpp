@@ -26,7 +26,7 @@
 #define EACH(e, v) for(auto &e : v)
 #define ITR(it, v) for(auto it = (v).begin(); it != (v).end(); ++it)
 #define RITR(it, v) for(auto it = (v).rbegin(); it != (v).rend(); ++it)
-#define CASE(x) break; case x:
+#define CASE break; case
 #define ALL(v)  (v).begin(), (v).end()
 #define RALL(v) (v).rbegin(), (v).rend()
 #define SZ(v) int((v).size())
@@ -141,15 +141,15 @@ int main() {
 	int shift=0;
 	REP(_, q){
 		int t,x,y;
-		cin>>t>>x>>y;
+		IN(t,x,y);
 		x--, y--;
 		switch(t){
 			case 1:
 				swap(an[(x-shift+n)%n],an[(y-shift+n)%n]);
-			CASE(2)
+			CASE 2:
 				shift++;
 				shift%=n;
-			CASE(3)
+			CASE 3:
 				OUT(an[(x-shift+n)%n]);
 		}
 	}
